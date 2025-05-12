@@ -1505,7 +1505,7 @@
               <div class="form-group row">
                 <div class="col-md-6">
     
-                  <input type="submit" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
+                  <input type="button" onclick="contactSubmit()" class="btn btn-primary py-3 px-5 btn-block" value="Send Message">
                 </div>
               </div>
     
@@ -1660,6 +1660,62 @@
       const Contact = document.getElementById("contact-head");
       Contact.innerHTML = "WoooW  "
     }
+
+    //AJAX function
+    const ajax = async (config) => {
+    const request = fetch(config.url,{
+      method : config.method,
+      headers : {
+        'Accept' : 'application/json',
+        'Content-Type' : 'application/json'
+      },
+      body : JSON.stringify(config.data)
+    });
+    const response = request.json();
+    console.log(response.status);
+    return response;
+  }
+
+  function contactSubmit() {
+        let data = {
+            fname: document.getElementById('fname').value,
+            lname: document.getElementById('lname').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject-select') ? document.getElementById('subject-select').value : document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+        }
+
+        console.log('Sending:', data);
+
+        let config = {
+            url: 'http://localhost:4000/api/contact',
+            method: 'POST',
+            data: data,
+        }
+        ajax(config).then(response => {
+            console.log('Response:', response);
+            alert('Message sent!');
+        }).catch(err => {
+            console.error('Error:', err);
+            alert('Failed to send message.');
+        });
+    }
+
+    document.getElementById('subscribe-form').addEventListener('submit', async (e) => {
+      e.preventDefault(); // not refresh page
+      let subscribeData = {
+                            email : document.getElementById('subscribe-email')
+                          };
+      const response = await fetch('http://localhost:3000/api/subscribe', {
+                  method : 'POST',
+                  headers : {'Contact-Type' : 'application/json'},
+                  body : subscribeData
+      });
+      console.log(response);
+      let result = await response.json();
+      console.log(result.message)
+    })
+
   </script>
 
 </body>
