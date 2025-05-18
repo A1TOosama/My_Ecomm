@@ -1,12 +1,10 @@
-const http = require('http');
+var http = require('http');
 
 http.createServer(function (req, res) {
-    //res.setHeader('Access-Control-Allow-Origin', '*');
-    //res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    //res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Methods', 'Get,Post')
+    res.setHeader('Access-Control-Allow-Origin', '*')
 
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end('{"contactSubject": ["General Enquery", "System Administrator", "Data Analyst", "Cybersecurity Specialist", "Cloud Engineer", "UX/UI Designer", "Other","Nicety"]}');
-}).listen(5001, () => {
-    console.log("Server is running on http://localhost:5001");
-});
+  res.write(200, {'Content-Type' : 'application/json'}); 
+  res.end('{"contentSubject" : ["General Enquery" , "Schedules" ," Instructer" , "Prices" , "Other"]}'); 
+}).listen(5000); 
